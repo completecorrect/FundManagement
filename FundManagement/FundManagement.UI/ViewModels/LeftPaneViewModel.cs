@@ -36,7 +36,7 @@ namespace FundManagement.UI.ViewModels
             set
             {
                 _assetTypesList = value;
-                Validate();
+                Validate(value);
                 NotifyPropertyChanged();
             }
         }
@@ -56,7 +56,7 @@ namespace FundManagement.UI.ViewModels
             set
             {
                 _selectedAssetType = value;
-                Validate();
+                Validate(value);
                 NotifyPropertyChanged();
             }
         }
@@ -67,7 +67,7 @@ namespace FundManagement.UI.ViewModels
             get { return _price; }
             set {
                 _price = value;
-                Validate();
+                Validate(value);
                 NotifyPropertyChanged();
             }
         }
@@ -79,7 +79,7 @@ namespace FundManagement.UI.ViewModels
             set
             {
                 _quantity = value;
-                Validate();
+                Validate(value);
                 NotifyPropertyChanged();
             }
         }
@@ -126,9 +126,9 @@ namespace FundManagement.UI.ViewModels
             }
         }
 
-        public void Validate([CallerMemberName] string propertyName="")
+        public void Validate(object valueObject, [CallerMemberName] string propertyName="")
         {
-            errors.Clear();
+            //errors.Clear();
 
             string errorMessage=string.Empty;
             decimal tempDecimal;
@@ -137,14 +137,16 @@ namespace FundManagement.UI.ViewModels
                 case "Price":
                     if (!decimal.TryParse(Price, out tempDecimal))
                         errorMessage = "Price String is not valid decimal";
-
                     break;
 
                 case "Quantity":
                     if (!decimal.TryParse(Quantity, out tempDecimal))
                         errorMessage = "Quantity String is not valid decimal";
                     break;
-
+                case "SelectedAssetType":
+                    if (null == valueObject)
+                        errorMessage = "SelectedAssetType cannot be null";
+                    break;
                 default:
                     break;
             }
@@ -157,6 +159,11 @@ namespace FundManagement.UI.ViewModels
 
                 errors[propertyName].Add(errorMessage);
                 NotifyErrorsChanged(propertyName);
+            }
+            else
+            {   // clean the errors for that property
+                if (errors.ContainsKey(propertyName))
+                    errors[propertyName].Clear();
             }
 
         }
