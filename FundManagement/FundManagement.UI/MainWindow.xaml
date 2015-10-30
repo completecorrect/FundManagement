@@ -1,0 +1,94 @@
+﻿<Window x:Class="FundManagement.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FundManagement.UI"
+        xmlns:localview="clr-namespace:FundManagement.UI.View"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="btnShowHideReportPane" Click="btnShowHideReportPane_Click">Show Hide Report Pane</Button>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Column="1" Grid.RowSpan="2" x:Name="ReportPane">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- ALL -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Equity -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Bond -->
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                    <Label FontWeight="Bold">ALL</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Number</Label>
+                        <Label x:Name="lblAllTotalNumber">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Stock Weight</Label>
+                        <Label x:Name="lblAllTotalStockWeight">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Market Value of the Fund</Label>
+                        <Label x:Name="lblAllTotalMarketValueOfTheFund">123</Label>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                    <Label FontWeight="Bold">Equity</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Number</Label>
+                        <Label x:Name="lblEquityTotalNumber">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Stock Weight</Label>
+                        <Label x:Name="lblEquityTotalStockWeight">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Market Value of the Fund</Label>
+                        <Label x:Name="lblEquityTotalMarketValueOfTheFund">123</Label>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical">
+                    <Label FontWeight="Bold">Bond</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Number</Label>
+                        <Label x:Name="lblBondTotalNumber">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Stock Weight</Label>
+                        <Label x:Name="lblBondTotalStockWeight">123</Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Width="180">Total Market Value of the Fund</Label>
+                        <Label x:Name="lblBondTotalMarketValueOfTheFund">123</Label>
+                    </StackPanel>
+                </StackPanel>
+
+                
+                
+            </Grid>
+
+            <localview:LeftPane Grid.Column="0" Grid.Row="1" />
+
+        </Grid>
+
+    </StackPanel>
+</Window>
