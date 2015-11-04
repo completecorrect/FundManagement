@@ -25,22 +25,5 @@ namespace FundManagement.UI.View
         {
             InitializeComponent();
         }
-
-        private void btnAddFund_Click(object sender, RoutedEventArgs e)
-        {
-            if (ViewModel.HasErrors)
-            {
-                Trace.WriteLine("Due to errors, btnAddFund_Click returns without any action.");
-                return;
-            }
-
-            ViewModel.Assets.Add(new Entity.Asset
-            {
-                Price = ViewModel.Price,
-                Quantity = ViewModel.Quantity,
-                Type = ViewModel.SelectedAssetType.Value
-            });
-        }
-        
     }
 }

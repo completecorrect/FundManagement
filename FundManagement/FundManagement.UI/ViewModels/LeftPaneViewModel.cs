@@ -6,18 +6,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Microsoft.Practices.Prism.Commands;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace FundManagement.UI.ViewModels
 {
     public class LeftPaneViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
-        public LeftPaneViewModel()
-        {
-            _assetTypesList = new ObservableCollection<AssetType>();
-            _assetTypesList.Add(new AssetType { Name = "Bond", Value = "Bond" });
-            _assetTypesList.Add(new AssetType { Name = "Stock", Value = "Stock" });
-        }
-
         private ObservableCollection<Asset> _assets = new ObservableCollection<Asset>();
         public ObservableCollection<Asset> Assets
         {
@@ -46,9 +42,7 @@ namespace FundManagement.UI.ViewModels
             public string Name { get; set; }
             public string Value { get; set; }
         }
-
-
-
+        
         private AssetType _selectedAssetType { get; set; }
         public AssetType SelectedAssetType
         {
@@ -84,6 +78,52 @@ namespace FundManagement.UI.ViewModels
             }
         }
 
+        #region Commands
+
+        private DelegateCommand addAssetCommand;
+        public ICommand AddAssetCommand
+        {
+            get { return addAssetCommand; }
+        }
+
+        private bool AddAssetCanExecute()
+        {
+            bool CanExecute = true;
+            if (this.HasErrors)
+            {
+                Trace.WriteLine("Due to errors, btnAddFund_Click returns without any action.");
+                CanExecute = false;
+            }
+            return CanExecute;
+        }
+
+        private void AddAssetExecute()
+        {
+            this.Assets.Add(new Entity.Asset
+            {
+                Price = this.Price,
+                Quantity = this.Quantity,
+                Type = this.SelectedAssetType.Value
+            });
+        }
+
+
+        #endregion
+
+        public LeftPaneViewModel()
+        {
+            _assetTypesList = new ObservableCollection<AssetType>();
+            _assetTypesList.Add(new AssetType { Name = "Bond", Value = "Bond" });
+            _assetTypesList.Add(new AssetType { Name = "Stock", Value = "Stock" });
+
+            this.addAssetCommand = new DelegateCommand(this.AddAssetExecute, this.AddAssetCanExecute);
+        }
+
+        
+
+
+        #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -95,6 +135,8 @@ namespace FundManagement.UI.ViewModels
             }
         }
 
+        #endregion
+
         #region INotifyDataErrorInfo
 
         private Dictionary<string, List<string>> errors = new Dictionary<string, List<string>>();
@@ -103,7 +145,8 @@ namespace FundManagement.UI.ViewModels
         {
             get
             {
-                return errors.Any(err => err.Value != null && err.Value.Count > 0);
+                var errorExist = errors.Any(err => err.Value != null && err.Value.Count > 0);
+                return errorExist;
             }
         }
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;

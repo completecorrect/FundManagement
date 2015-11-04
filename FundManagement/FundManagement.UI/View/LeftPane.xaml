@@ -34,7 +34,7 @@
                 <TextBox x:Name="txtQuantity" Width="40" Text="{Binding Quantity}" />
             </StackPanel>
             <StackPanel>
-                <Button x:Name="btnAddFund" Width="100" Click="btnAddFund_Click">Add Fund</Button>
+                <Button x:Name="btnAddFund" Width="100" Command="{Binding AddAssetCommand}" >Add Fund</Button>
             </StackPanel>
         </StackPanel>
 
